@@ -131,6 +131,14 @@ python main.py \
 
 Checkpoints over the course of training will be stored under `storage/robothor-pointnav-rgb-resnetgru-ddppo/checkpoints/` and tensorboard logs will be stored under `storage/robothor-pointnav-rgb-resnetgru-ddppo/tb/`.
 
+If you have Tensorboard installed, you can track training progress with
+
+```bash
+tensorboard --logdir storage/robothor-pointnav-rgb-resnetgru-ddppo/tb/
+```
+
+which will default to the URL [http://localhost:6006/](http://localhost:6006/).
+
 To see commands used to train the navigation agents considered in the paper, see `train_navigation_agents.sh`
 
 ## 💪 Evaluating A Pre-Trained Agent
