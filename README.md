@@ -74,9 +74,13 @@ or
 conda activate robustnav
 ```
 
-**Python 3.6+ 🐍.** Each of the actions supports `typing` within <span class="chillMono">Python</span>.
+5. <b>[Optional]</b> In case the CUDA version on your machine (if you are using linux, you might find this version by running `/usr/local/cuda/bin/nvcc --version`) is different from the one used in the repository, you can install your desired version by running:
 
-**AI2-THOR <bcc2e6> 🧞.** To ensure reproducible results, please install the version of the AI2THOR present in `robustnav.yml`.
+```bash
+conda env update --file ./conda/environment-<CUDA-VERSION>.yml --name <ENV-NAME>
+```
+
+where `CUDA-VERSION` is the specified CUDA version (this repo right now supports 9.1, 10.1 and 10.2 under the folder `conda/`) and `ENV-NAME` is the name of the project environment (`robustnav` or the specified name in step 3)
 
 After installing the requirements, you should start the xserver by running [this script](scripts/startx.py) in the background.
 
