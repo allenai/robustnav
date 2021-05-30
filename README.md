@@ -15,7 +15,7 @@ to improve robustness such as data-augmentation and self-supervised adaptation o
 improvements in navigation performance, there is still a
 long way to go in terms of recovering lost performance relative to clean “non-corrupt” settings, warranting more research in this direction.
 
-This code base is based on <a href=https://allenact.org/>AllenAct</a> framework and the majority of the core training algorithms and pipelines are borrowed from <a href=https://github.com/allenai/allenact>AllenAct code base</a>.
+RobustNav is based on <a href=https://allenact.org/>AllenAct</a> framework and the majority of the core training algorithms and pipelines are borrowed from a specific commit of the <a href=https://github.com/allenai/allenact>AllenAct code base</a>.
 
 <!-- ### Citation
 
@@ -51,16 +51,24 @@ If you find this project useful in your research, please consider citing:
 2. To begin, clone this repository locally
 
 ```bash
-git clone https://github.com/prithv1/robustnav.git
+git clone https://github.com/allenai/robustnav.git
 ```
 
 3. You can then install requirements inside a conda environment by running
 
 ```bash
-conda env create --file robustnav.yml
+conda env create --file robustnav.yml --name <ENV-NAME>
 ```
 
+where `ENV-NAME` is the name of the environment. The default environment name is `robustnav` if `ENV-NAME` is not specified.
+
 4. Activate the conda environment by running
+
+```bash
+conda activate <ENV-NAME>
+```
+
+or
 
 ```bash
 conda activate robustnav
