@@ -129,6 +129,8 @@ python main.py \
     -et rnav_pointnav_vanilla_rgb_resnet_ddppo_clean
 ```
 
+Checkpoints over the course of training will be stored under `storage/robothor-pointnav-rgb-resnetgru-ddppo/checkpoints/` and tensorboard logs will be stored under `storage/robothor-pointnav-rgb-resnetgru-ddppo/tb/`.
+
 To see commands used to train the navigation agents considered in the paper, see `train_navigation_agents.sh`
 
 ## 💪 Evaluating A Pre-Trained Agent
@@ -166,6 +168,8 @@ python main.py \
     -e \
     -tsg 0
 ```
+
+The output trajectories and associated metrics per episode will be stored under `storage/robothor-pointnav-rgb-resnetgru-ddppo-eval/metrics/`.
 
 ### Visual Corruptions
 
