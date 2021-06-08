@@ -17,19 +17,6 @@ long way to go in terms of recovering lost performance relative to clean “non-
 
 RobustNav is based on <a href=https://allenact.org/>AllenAct</a> framework and the majority of the core training algorithms and pipelines are borrowed from a specific commit of the <a href=https://github.com/allenai/allenact>AllenAct code base</a>.
 
-<!-- ### Citation
-
-If you find this project useful in your research, please consider citing:
-
-```
-   @inproceedings{ehsani2021manipulathor,
-     title={ManipulaTHOR: A Framework for Visual Object Manipulation},
-     author={Ehsani, Kiana and Han, Winson and Herrasti, Alvaro and VanderBilt, Eli and Weihs, Luca and Kolve, Eric and Kembhavi, Aniruddha and Mottaghi, Roozbeh},
-     booktitle={CVPR},
-     year={2021}
-   }
-``` -->
-
 ### Contents
 
 <div class="toc">
@@ -243,9 +230,9 @@ python main.py \
     -s 12345 \
     -e \
     -tsg 0 \
-    -dcr True \
-    -ctr True \
-    -crt True
+    -dcr \
+    -ctr \
+    -crt
 ```
 
 `-dcr` is set to `True` for Motion Bias, Motion Drift and Motor Failure. `-ctr` is set to `True` for constant translation bias and `-crt` is set to `True` for constant rotation bias.
@@ -262,9 +249,9 @@ python main.py \
     -s 12345 \
     -e \
     -tsg 0 \
-    -dcr True \
-    -str True \
-    -srt True
+    -dcr \
+    -str \
+    -srt
 ```
 
 `-str` is set to `True` for stochastic translation bias and `-srt` is set to `True` for stochastic rotation bias.
@@ -281,8 +268,8 @@ python main.py \
     -s 12345 \
     -e \
     -tsg 0 \
-    -dcr True \
-    -dr True \
+    -dcr \
+    -dr \
     -dr_deg 10.0
 ```
 
@@ -300,8 +287,8 @@ python main.py \
     -s 12345 \
     -e \
     -tsg 0 \
-    -dcr True \
-    -mf True
+    -dcr \
+    -mf
 ```
 
 `-mf` is set to `True` for motor failure.
@@ -348,8 +335,8 @@ python main.py \
     -s 12345 \
     -e \
     -tsg 0 \
-    -dcr True \
-    -dr True \
+    -dcr \
+    -dr \
     -dr_deg 10.0 \
     -vc Defocus_Blur \
     -vs 5

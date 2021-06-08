@@ -49,12 +49,12 @@ python main.py \
     -s 12345 \
     -e \
     -tsg 0 \
-    -dcr True \ # Set to true for Motion-Bias, Motion-Drift & Motor-Failure
-    -ctr True \ # Set to true for Motion-Bias (Constant) translation
-    -crt True \ # Set to true for Motion-Bias (Constant) rotation
-    -str True \ # Set to true for Motion-Bias (Stochastic) translation
-    -srt True \ # Set to true for Motion-Bias (Stochastic) rotation
-    -dr True \ # Set to true for Motion-Drift
+    -dcr \ # Set to true for Motion-Bias, Motion-Drift & Motor-Failure
+    -ctr \ # Set to true for Motion-Bias (Constant) translation
+    -crt \ # Set to true for Motion-Bias (Constant) rotation
+    -str \ # Set to true for Motion-Bias (Stochastic) translation
+    -srt \ # Set to true for Motion-Bias (Stochastic) rotation
+    -dr \ # Set to true for Motion-Drift
     -dr_deg 10.0 \ # Drift angle for Motion-Drift
     -mf True # Set to true for Motor-Failure
 
@@ -157,7 +157,7 @@ Timestamp: 2021-03-16_09-25-38
 # ================================================================================
 
 # Clean
-sudo python main.py \
+python main.py \
     -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
     -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo \
     -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -174,7 +174,7 @@ sudo python main.py \
 # (Defocus Blur, Motion Blur, Spatter, Low Lighting, Speckle Noise)
 for CORR in Defocus_Blur Lighting Speckle_Noise Spatter Motion_Blur
 do
-    sudo python main.py \
+    python main.py \
         -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
         -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo \
         -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -188,7 +188,7 @@ do
 done
 
 # Lower-FOV
-sudo python main.py \
+python main.py \
     -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
     -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_fov \
     -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -196,10 +196,10 @@ sudo python main.py \
     -et rnav_pointnav_vanilla_rgb_resnet_ddppo_fov \
     -s 12345 \
     -e \
-    -tsg 1
+    -tsg 0
 
 # Camera-Crack
-sudo python main.py \
+python main.py \
     -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
     -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_cam_crack \
     -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -207,13 +207,13 @@ sudo python main.py \
     -et rnav_pointnav_vanilla_rgb_resnet_ddppo_cam_crack \
     -s 12345 \
     -e \
-    -tsg 3
+    -tsg 0
 
 # Dynamics Corruptions
 # ********************************************************************************
 
 # Motion Bias (Constant)
-sudo python main.py \
+python main.py \
     -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
     -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_dyn \
     -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -221,13 +221,13 @@ sudo python main.py \
     -et rnav_pointnav_vanilla_rgb_resnet_ddppo_clean_mb_const \
     -s 12345 \
     -e \
-    -tsg 4 \
-    -dcr True \
-    -ctr True \
-    -crt True
+    -tsg 0 \
+    -dcr \
+    -ctr \
+    -crt
     
 # Motion Bias (Stochastic)
-sudo python main.py \
+python main.py \
     -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
     -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_dyn \
     -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -235,13 +235,13 @@ sudo python main.py \
     -et rnav_pointnav_vanilla_rgb_resnet_ddppo_clean_mb_stoch \
     -s 12345 \
     -e \
-    -tsg 4 \
-    -dcr True \
-    -str True \
-    -srt True
+    -tsg 0 \
+    -dcr \
+    -str \
+    -srt
     
 # Motion Drift
-sudo python main.py \
+python main.py \
     -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
     -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_dyn \
     -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -249,13 +249,13 @@ sudo python main.py \
     -et rnav_pointnav_vanilla_rgb_resnet_ddppo_clean_drift_deg_10 \
     -s 12345 \
     -e \
-    -tsg 4 \
-    -dcr True \
-    -dr True \
+    -tsg 0 \
+    -dcr \
+    -dr \
     -dr_deg 10.0
     
 # Motor Failure
-sudo python main.py \
+python main.py \
     -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
     -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_dyn \
     -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -263,12 +263,12 @@ sudo python main.py \
     -et rnav_pointnav_vanilla_rgb_resnet_ddppo_clean_motfail \
     -s 12345 \
     -e \
-    -tsg 4 \
-    -dcr True \
-    -mf True
+    -tsg 0 \
+    -dcr \
+    -mf
     
 # PyRobot Noise Models
-sudo python main.py \
+python main.py \
     -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
     -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_pyrobot_dyn \
     -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -276,7 +276,7 @@ sudo python main.py \
     -et rnav_pointnav_vanilla_rgb_resnet_ddppo_clean_pyrobot_ilqr_1 \
     -s 12345 \
     -e \
-    -tsg 4
+    -tsg 0
 
 # Visual + Dynamics Corruptions
 # ********************************************************************************
@@ -285,7 +285,7 @@ sudo python main.py \
 # (Defocus Blur, Speckle Noise, Spatter)
 for CORR in Defocus_Blur Speckle_Noise Spatter
 do
-    sudo python main.py \
+    python main.py \
         -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
         -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_dyn \
         -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -293,10 +293,10 @@ do
         -et rnav_pointnav_vanilla_rgb_resnet_ddppo_"$CORR"_s5_mb_stoch \
         -s 12345 \
         -e \
-        -tsg 1 \
-        -dcr True \
-        -str True \
-        -srt True \
+        -tsg 0 \
+        -dcr \
+        -str \
+        -srt \
         -vc $CORR \
         -vs 5
 done
@@ -305,7 +305,7 @@ done
 # (Defocus Blur, Speckle Noise, Spatter)
 for CORR in Defocus_Blur Speckle_Noise Spatter
 do
-    sudo python main.py \
+    python main.py \
         -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
         -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_dyn \
         -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -313,9 +313,9 @@ do
         -et rnav_pointnav_vanilla_rgb_resnet_ddppo_"$CORR"_s5_drift_deg_10 \
         -s 12345 \
         -e \
-        -tsg 3 \
-        -dcr True \
-        -dr True \
+        -tsg 0 \
+        -dcr \
+        -dr \
         -dr_deg 10.0 \
         -vc $CORR \
         -vs 5
@@ -325,7 +325,7 @@ done
 ## (Defocus Blur, Speckle Noise, Spatter)
 for CORR in Defocus_Blur Speckle_Noise Spatter
 do
-    sudo python main.py \
+    python main.py \
         -o storage/robothor-pointnav-rgb-resnetgru-ddppo-eval \
         -b projects/robustnav_baselines/experiments/robustnav_eval pointnav_robothor_vanilla_rgb_resnet_ddppo_pyrobot_dyn \
         -c rnav_checkpoints/pnav_rgb_agent.pt \
@@ -333,7 +333,7 @@ do
         -et rnav_pointnav_vanilla_rgb_resnet_ddppo_"$CORR"_s5_pyrobot_ilqr_1 \
         -s 12345 \
         -e \
-        -tsg 2 \
+        -tsg 0 \
         -vc $CORR \
         -vs 5
 done

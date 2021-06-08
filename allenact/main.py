@@ -164,65 +164,72 @@ def get_args():
     parser.add_argument(
         "-dcr",
         "--dyn_corr_mode",
-        default=False,
-        type=bool,
+        dest="dyn_corr_mode",
         required=False,
+        action="store_true",
         help="Whether to apply dynamics corruptions",
     )
+    parser.set_defaults(dyn_corr_mode=False)
 
     parser.add_argument(
         "-mf",
         "--motor_failure",
-        default=False,
-        type=bool,
+        dest="motor_failure",
         required=False,
+        action="store_true",
         help="Whether to apply motor failure as the dynamics corruption",
     )
+    parser.set_defaults(motor_failure=False)
 
     parser.add_argument(
         "-ctr",
         "--const_translate",
-        default=False,
-        type=bool,
+        dest="const_translate",
         required=False,
+        action="store_true",
         help="Whether to apply constant translation bias as the dynamics corruption",
     )
+    parser.set_defaults(const_translate=False)
 
     parser.add_argument(
         "-crt",
         "--const_rotate",
-        default=False,
-        type=bool,
+        dest="const_rotate",
         required=False,
+        action="store_true",
         help="Whether to apply constant rotation bias as the dynamics corruption",
     )
+    parser.set_defaults(const_rotate=False)
 
     parser.add_argument(
         "-str",
         "--stoch_translate",
-        default=False,
-        type=bool,
+        dest="stoch_translate",
         required=False,
+        action="store_true",
         help="Whether to apply stochastic translation bias as the dynamics corruption",
     )
+    parser.set_defaults(stoch_translate=False)
 
     parser.add_argument(
         "-srt",
         "--stoch_rotate",
-        default=False,
-        type=bool,
+        dest="stoch_rotate",
         required=False,
+        action="store_true",
         help="Whether to apply stochastic rotation bias as the dynamics corruption",
     )
+    parser.set_defaults(stoch_rotate=False)
 
     parser.add_argument(
         "-dr",
         "--drift",
-        default=False,
-        type=bool,
+        dest="drift",
         required=False,
+        action="store_true",
         help="Whether to apply drift in translation as the dynamics corruption",
     )
+    parser.set_defaults(drift=False)
 
     parser.add_argument(
         "-dr_deg",
@@ -263,29 +270,32 @@ def get_args():
     parser.add_argument(
         "-irc",
         "--random_crop",
-        default=False,
-        type=bool,
+        dest="random_crop",
         required=False,
+        action="store_true",
         help="Specify if random crop is to be applied to the egocentric observations",
     )
+    parser.set_defaults(random_crop=False)
 
     parser.add_argument(
         "-icj",
         "--color_jitter",
-        default=False,
-        type=bool,
+        dest="color_jitter",
         required=False,
+        action="store_true",
         help="Specify if random crop is to be applied to the egocentric observations",
     )
+    parser.set_defaults(color_jitter=True)
 
     parser.add_argument(
         "-irs",
         "--random_shift",
-        default=False,
-        type=bool,
+        dest="random_shift",
         required=False,
+        action="store_true",
         help="Specify if random shift is to be applied to the egocentric observations",
     )
+    parser.set_defaults(random_shift=False)
 
     parser.add_argument(
         "-tsg",

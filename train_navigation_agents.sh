@@ -21,9 +21,9 @@ python main.py \
     -b projects/robustnav_baselines/experiments/robustnav_train pointnav_robothor_vanilla_rgb_resnet_ddppo \
     -s 12345 \
     -et rnav_pointnav_vanilla_rgb_resnet_daug_ddppo_clean \
-    -irc True \
-    -icj True \
-    -irs True
+    -irc \
+    -icj \
+    -irs
 
 # PointNav RGB Agents (with Action Prediction)
 python main.py \
