@@ -1,4 +1,4 @@
-# <a href="https://prior.allenai.org/projects/robustnav">RobustNav: Towards Benchmarking Robustness in Embodied Navigation</a>
+# <a href="https://arxiv.org/abs/2106.04531">RobustNav: Towards Benchmarking Robustness in Embodied Navigation</a>
 
 #### Prithvijit Chattopadhyay, Judy Hoffman, Roozbeh Mottaghi, Ani Kembhavi
 
