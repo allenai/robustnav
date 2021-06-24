@@ -17,6 +17,18 @@ long way to go in terms of recovering lost performance relative to clean “non-
 
 RobustNav is based on <a href=https://allenact.org/>AllenAct</a> framework and the majority of the core training algorithms and pipelines are borrowed from a specific commit of the <a href=https://github.com/allenai/allenact>AllenAct code base</a>.
 
+### Citation
+
+If you find this project useful in your research, please consider citing:
+
+```
+    @misc{2021RobustNav, 
+      author = {Chattopadhyay, Prithvijit and Hoffman, Judy and Mottaghi, Roozbeh and Kembhavi, Ani},
+      title = {RobustNav: Towards Benchmarking Robustness in Embodied Navigation},
+      year = 2021,
+    }
+```
+
 ### Contents
 
 <div class="toc">
