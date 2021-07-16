@@ -1,0 +1,36 @@
+beta: 1
+bloss_coeff: 10
+eval:
+  corruptions:
+  - frost
+  - fog
+  - gaussianBlur
+  - speckleNoise
+  - impulseNoise
+  intensities:
+  - 5
+  - 5
+  - 1
+  - 1
+  - 1
+  path: ./checkpoints/LUSR/weather/best_model.pt
+  root: ./64_frames_test
+id: weather_redo
+model: LUSR
+model_params:
+  class_latent_size: 16
+  content_latent_size: 64
+training:
+  batch_size: 100
+  corruptions:
+  - frost
+  - fog
+  data_root: ./64_frames
+  epoch: 200
+  eval_root: ./64_frames_test
+  intensities:
+  - 5
+  - 5
+  lr: 0.0001
+  num_workers: 4
+  save_freq: 10

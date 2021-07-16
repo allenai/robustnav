@@ -1,0 +1,24 @@
+beta: 20
+bloss_coeff: 10
+id: test_DARLA
+model: DARLA
+model_params:
+  AE_weight_path: ./checkpoints/AE/test_ae/best_model.pt
+  class_latent_size: 16
+  content_latent_size: 64
+training:
+  batch_size: 100
+  corruptions:
+  - gaussianBlur
+  - speckleNoise
+  - impulseNoise
+  data_root: ./64_frames
+  epoch: 200
+  eval_root: ./64_frames_test
+  intensities:
+  - 1
+  - 1
+  - 1
+  lr: 0.0001
+  num_workers: 4
+  save_freq: 10

@@ -1,0 +1,37 @@
+beta: 20
+bloss_coeff: 20
+eval:
+  corruptions:
+  - frost
+  - fog
+  - gaussianBlur
+  - speckleNoise
+  - impulseNoise
+  intensities:
+  - 5
+  - 5
+  - 1
+  - 1
+  - 1
+  path: ./checkpoints/DARLA/weather_20/best_model.pt
+  root: ./64_frames_test
+id: weather_20
+model: DARLA
+model_params:
+  AE_weight_path: ./checkpoints/AE/test_ae/best_model.pt
+  class_latent_size: 16
+  content_latent_size: 64
+training:
+  batch_size: 100
+  corruptions:
+  - frost
+  - fog
+  data_root: ./64_frames
+  epoch: 200
+  eval_root: ./64_frames_test
+  intensities:
+  - 5
+  - 5
+  lr: 0.0001
+  num_workers: 4
+  save_freq: 10

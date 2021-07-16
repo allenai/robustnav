@@ -1,0 +1,22 @@
+beta: 1
+id: test_ddvae
+model: DDVAE
+model_params:
+  class_latent_size: 16
+  content_latent_size: 64
+training:
+  batch_size: 100
+  corruptions:
+  - gaussianBlur
+  - speckleNoise
+  - impulseNoise
+  data_root: ./64_frames
+  epoch: 200
+  eval_root: ./64_frames_test
+  intensities:
+  - 1
+  - 1
+  - 1
+  lr: 0.0001
+  num_workers: 4
+  save_freq: 10
