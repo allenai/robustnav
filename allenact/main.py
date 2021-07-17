@@ -319,6 +319,33 @@ def get_args():
     )
 
     parser.add_argument(
+        "-em",
+        "--encoder_model",
+        default=None,
+        type=str,
+        required=False,
+        help="Name of custom state encoder model",
+    )
+
+    parser.add_argument(
+        "-emb",
+        "--encoder_base",
+        default=None,
+        type=str,
+        required=False,
+        help="Name of custom state encoder model",
+    )
+
+    parser.add_argument(
+        "-sckpt",
+        "--state_ckpt_path",
+        default=None,
+        type=str,
+        required=False,
+        help="Path to encoder model weight",
+    )
+
+    parser.add_argument(
         "-i",
         "--disable_tensorboard",
         dest="disable_tensorboard",
@@ -484,6 +511,12 @@ def main():
     cfg.monkey_patch_datasets(
         TRAINING_DATASET_DIR, VALIDATION_DATASET_DIR, TEST_DATASET_DIR
     )
+
+    if args.experiment == 'objectnav_robothor_vanilla_rgb_custom_ddppo':
+        if args.encoder_model is None:
+            raise Exception('objectnav_robothor_vanilla_rgb_custom_ddppo should have a state model specified')
+        else:
+            cfg.create_preprocessor(args.encoder_model, args.state_ckpt_path, args.encoder_base)
 
     if args.dyn_corr_mode:
         cfg.monkey_patch_env_args(
