@@ -235,11 +235,6 @@ class ObjectNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
         rgb_uuid = "rgb_resnet"
         goal_sensor_uuid = "goal_object_type_ind"
 
-        if '64' in self.model_name:
-            latent_sz = 32
-        else:
-            raise Exception(f"{self.model_name} is not a properly named model should end with \'_input size\'")
-
         # TODO: Change this to custom actor critic
         return ResnetTensorObjectNavActorCritic(
             action_space=gym.spaces.Discrete(len(ObjectNavTask.class_action_names())),
@@ -250,8 +245,9 @@ class ObjectNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
             goal_dims=32,
         )
     
-    def create_preprocessor(self, model_name, ckpt_path, encoder_base):
+    def create_preprocessor(self, model_name, ckpt_path, encoder_base, latent_size):
         self.model_name = model_name
+        self.latent_size = latent_size
         self.PREPROCESSORS = [
             Builder(
                 CustomPreprocessor,
@@ -263,6 +259,7 @@ class ObjectNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
                     "input_width": self.SCREEN_SIZE,
                     "input_uuids": [f"{model_name}_lowres"],
                     "output_uuid": f"rgb_{model_name}",
+                    "latent_size": latent_size
                 },
             ),
         ]

@@ -12,7 +12,7 @@
             "console": "integratedTerminal",
             "args": ["-o", "storage/robothor-objectnav-rgb-custom-ddppo",
             "-b", "projects/robustnav_baselines/experiments/robustnav_train", "objectnav_robothor_vanilla_rgb_custom_ddppo",
-            "-s", "12345", "-et", "custom", "-em", "VAE_64", "-emb", "domain_adaptation/models/M64"]
+            "-s", "12345", "-et", "custom", "-em", "VAE_64", "-emb", "domain_adaptation/models/M64", "-las", "32"]
         }
     ]
 }

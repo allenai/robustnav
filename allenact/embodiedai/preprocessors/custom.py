@@ -74,6 +74,7 @@ class CustomPreprocessor(Preprocessor):
         self,
         model_name: str,
         encoder_base: str,
+        latent_size: int,
         input_uuids: List[str],
         output_uuid: str,
         input_height: int,
@@ -92,9 +93,9 @@ class CustomPreprocessor(Preprocessor):
 
         self.input_height = input_height
         self.input_width = input_width
-        self.model = load_model(model_name, encoder_base)()
+        self.model = load_model(model_name, encoder_base)(content_latent_size = latent_size)
         self.model_name = model_name
-        self.shape = (1, self.model.content_latent_size)
+        self.shape = (1, latent_size)
 
         if ckpt_path is not None:
             self.model.load_state_dict(torch.load(ckpt_path))

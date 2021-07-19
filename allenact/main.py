@@ -346,6 +346,15 @@ def get_args():
     )
 
     parser.add_argument(
+        "-las",
+        "--latent_size",
+        default=None,
+        type=int,
+        required=False,
+        help="State encoder model latent size",
+    )
+
+    parser.add_argument(
         "-i",
         "--disable_tensorboard",
         dest="disable_tensorboard",
@@ -516,7 +525,7 @@ def main():
         if args.encoder_model is None:
             raise Exception('objectnav_robothor_vanilla_rgb_custom_ddppo should have a state model specified')
         else:
-            cfg.create_preprocessor(args.encoder_model, args.state_ckpt_path, args.encoder_base)
+            cfg.create_preprocessor(args.encoder_model, args.state_ckpt_path, args.encoder_base, args.latent_size)
 
     if args.dyn_corr_mode:
         cfg.monkey_patch_env_args(
