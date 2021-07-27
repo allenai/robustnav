@@ -137,8 +137,6 @@ def DDVAE_loss(cfg, model, imgs_list, device):
     loss = 0
     if isinstance(imgs_list, list) or isinstance(imgs_list, tuple):
         clean_imgs = imgs_list[0].to(device)
-        # mu_list = list()
-        # sigma_list = list()
         mu_list = list()
         sigma_list = list()
 
@@ -148,25 +146,21 @@ def DDVAE_loss(cfg, model, imgs_list, device):
 
             # True VAE
             loss += vae_loss(clean_imgs, mu, sigma, recon_imgs, cfg['beta'])
-
-            # DARLA inspired version
-            # loss += torch.nn.functional.mse_loss(recon_imgs, noised_imgs)
             loss += kl_loss(noised_imgs, mu, sigma, cfg['beta'])
 
             # latent_list.append(latent_1)
             
-            mu2, sig2, _, latent_2 = model.forward(recon_imgs, True)
+            # mu2, sig2, _, latent_2 = model.forward(recon_imgs, True)
             
-            mu_list.append(mu2)
-            sigma_list.append(sig2)
+            # mu_list.append(mu2)
+            # sigma_list.append(sig2)
 
             # _, _, _, latent_2 = model.forward(recon_imgs, True)
             # latent_list.append(latent_2)
 
-        #     mu_list.append(mu)
-        #     sigma_list.append(sigma)
+            mu_list.append(mu)
+            sigma_list.append(sigma)
         
-        # param_len = len(mu_list)
         param_len = len(mu_list)
 
         # for i in range(param_len):

@@ -1,4 +1,5 @@
 import os
+import json
 import uuid
 import argparse
 import numpy as np
@@ -25,30 +26,54 @@ def sample(args):
     controller = Controller(gridSize=0.25, movementGaussianSigma=0, rotateGaussianSigma=0, renderDepthImage=False, renderInstanceSegmentation=False, **args)
     total_success = 0
     total_fail = 0
+    samples_data = dict()
+    object_counts = None
 
     for i in range(STEPS):
         action = sample_action()
         event = controller.step(action=action)
         isActSucc = event.metadata['lastActionSuccess']
-        frame_arr = event.frame
         image_id = None
 
         if isActSucc:
             fail_count = 0
             total_success += 1
+            frame_arr = event.frame
             image = im.fromarray(frame_arr)
-            image_id = uuid.uuid1()
+            image_id = str(uuid.uuid1())
             image.save(f'{SAVE_PATH}/{image_id}.png')
+
+            hrzn = event.metadata['agent']['cameraHorizon']
+            pos = event.metadata['agent']['position']
+            rot = event.metadata['agent']['rotation']
+            samples_data[image_id] = {'Horizon' : hrzn, 'Position' : pos, 'Rotation': rot}
+
+            if object_counts is None:
+                object_counts = dict()
+                for obj in event.metadata['objects']:
+                    object_counts[obj['name']] = 1 if obj['visible'] else 0
+            else:
+                for obj in event.metadata['objects']:
+                    if obj['visible']:
+                        object_counts[obj['name']] += 1
         else:
             total_fail += 1
             fail_count += 1
 
             if fail_count > FAIL_COUNT:
-            controller.reset(args)
+                controller.reset(args)
 
         if i % PRINT_EVERY == 0:
             print(f'Actions Succeeded: {total_success}')
             print(f'Actions Failed: {total_fail}')
+    
+    object_counts['total_saves'] = total_success
+
+    with open(f"{SAVE_PATH}/samples_meta.json", 'w') as f:
+        json.dump(samples_data, f, indent=4)
+    
+    with open(f"{SAVE_PATH}/objects_meta.json", 'w') as f:      
+        json.dumps(object_counts, f, indent=4)
 
 
 if __name__ == "__main__":
@@ -74,7 +99,7 @@ if __name__ == "__main__":
         "--height",
         nargs="?",
         type=int,
-        default=64,
+        default=480,
         help="frames height",
     )
 
@@ -82,7 +107,7 @@ if __name__ == "__main__":
         "--width",
         nargs="?",
         type=int,
-        default=64,
+        default=640,
         help="frames width",
     )
 
@@ -106,7 +131,7 @@ if __name__ == "__main__":
         "--savepath",
         nargs="?",
         type=str,
-        default='',
+        default=None,
         help="Path to save frames"
     )
 
@@ -141,11 +166,11 @@ if __name__ == "__main__":
     FAIL_COUNT = args.failcount
     STEPS = args.steps
 
-    if SAVE_PATH == '':
-        SAVE_PATH = f'./64_frames/{args.scene}'
+    if SAVE_PATH is None:
+        SAVE_PATH = f'./unknown_frames/{args.scene}'
 
-        if not os.path.exists(SAVE_PATH):
-                os.makedirs(SAVE_PATH, exist_ok=True)
+    if not os.path.exists(SAVE_PATH):
+        os.makedirs(SAVE_PATH, exist_ok=True)
     
     del args.printevery
     del args.failcount

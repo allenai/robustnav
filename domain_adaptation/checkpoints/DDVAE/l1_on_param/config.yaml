@@ -12,7 +12,7 @@ eval:
   - 1
   - 1
   - 1
-  path: ./checkpoints/DDVAE/new_idea/best_model.pt
+  path: ./checkpoints/DDVAE/l1_on_param/best_model.pt
   root: ./64_frames_test
 id: l1_on_param
 model: DDVAE
