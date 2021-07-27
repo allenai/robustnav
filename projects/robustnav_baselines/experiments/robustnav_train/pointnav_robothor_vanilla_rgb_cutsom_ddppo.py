@@ -130,7 +130,7 @@ class PointNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
             self.TRAIN_DATASET_DIR = os.path.join(os.getcwd(), train_dataset)
         else:
             self.TRAIN_DATASET_DIR = os.path.join(
-                os.getcwd(), "datasets/robothor-pointnav/train"
+                os.getcwd(), "subsamples/robothor-pointnav/train"
             )
 
         if val_dataset is not None:

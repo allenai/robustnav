@@ -13,11 +13,11 @@ def main(args):
     if args.is_pointnav:
         val = 'robothor-pointnav'
         path = path.format(val)
-        save_path = save_path + val
+        save_path = save_path + val + '/train/episodes'
     else:
         val = 'robothor-objectnav'
         path = path.format(val)
-        save_path = save_path + val
+        save_path = save_path + val + '/train/episodes'
     
     if not os.path.exists(save_path):
         os.makedirs(save_path, exist_ok=True)
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         "--save_path",
         nargs="?",
         type=str,
-        default='./episodes/',
+        default='./subsamples/',
         help="Folder to save episode jsons"
     )
 
