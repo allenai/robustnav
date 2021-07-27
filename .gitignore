@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 storage/
+domain_adaptation/data/
+domain_adaptation/checkimages/
+domain_adaptation/heatmap/

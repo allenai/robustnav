@@ -139,7 +139,7 @@ def main(cfg):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', default='./configs/darla.yaml',
+    parser.add_argument('--config', default='./configs/ddvae.yaml',
                         type=str, help='Path to yaml config file')
     parser.add_argument('--clean_only', default=False,
                         type=bool, help='Compare to clean latent only')
