@@ -22,11 +22,12 @@ RobustNav is based on <a href=https://allenact.org/>AllenAct</a> framework and t
 If you find this project useful in your research, please consider citing:
 
 ```
-    @misc{2021RobustNav, 
-      author = {Chattopadhyay, Prithvijit and Hoffman, Judy and Mottaghi, Roozbeh and Kembhavi, Ani},
-      title = {RobustNav: Towards Benchmarking Robustness in Embodied Navigation},
-      year = 2021,
-    }
+@article{2021RobustNav, 
+  author = {Chattopadhyay, Prithvijit and Hoffman, Judy and Mottaghi, Roozbeh and Kembhavi, Ani},
+  title = {RobustNav: Towards Benchmarking Robustness in Embodied Navigation},
+  year = 2021,
+  journal = {International Conference in Computer Vision (ICCV)}
+}
 ```
 
 ### Contents
