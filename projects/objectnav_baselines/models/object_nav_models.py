@@ -302,23 +302,38 @@ class ResnetTensorGoalEncoder(nn.Module):
             num_embeddings=observation_spaces.spaces[self.goal_uuid].n,
             embedding_dim=self.class_dims,
         )
+        self.ff_size = 32
         self.blind = self.resnet_uuid not in observation_spaces.spaces
         if not self.blind:
+            # Outputs preprocessor shape
             self.resnet_tensor_shape = observation_spaces.spaces[self.resnet_uuid].shape
+            # Sequential 
             self.resnet_compressor = nn.Sequential(
-                nn.Conv2d(self.resnet_tensor_shape[0], self.resnet_hid_out_dims[0], 1),
+                nn.Linear(self.resnet_tensor_shape[1], self.ff_size),
                 nn.ReLU(),
-                nn.Conv2d(*self.resnet_hid_out_dims[0:2], 1),
+                nn.Linear(self.ff_size, self.ff_size),
                 nn.ReLU(),
             )
+            # self.resnet_compressor = nn.Sequential(
+            #     nn.Conv2d(self.resnet_tensor_shape[0], self.resnet_hid_out_dims[0], 1),
+            #     nn.ReLU(),
+            #     nn.Conv2d(*self.resnet_hid_out_dims[0:2], 1),
+            #     nn.ReLU(),
+            # )
+            # self.target_obs_combiner = nn.Sequential(
+            #     nn.Conv2d(
+            #         self.resnet_hid_out_dims[1] + self.class_dims,
+            #         self.combine_hid_out_dims[0],
+            #         1,
+            #     ),
+            #     nn.ReLU(),
+            #     nn.Conv2d(*self.combine_hid_out_dims[0:2], 1),
+            # )
             self.target_obs_combiner = nn.Sequential(
-                nn.Conv2d(
-                    self.resnet_hid_out_dims[1] + self.class_dims,
-                    self.combine_hid_out_dims[0],
-                    1,
-                ),
+                nn.Linear(self.ff_size + self.class_dims, self.ff_size),
                 nn.ReLU(),
-                nn.Conv2d(*self.combine_hid_out_dims[0:2], 1),
+                nn.Linear(self.ff_size, self.ff_size),
+                nn.ReLU()
             )
 
     @property
@@ -330,11 +345,12 @@ class ResnetTensorGoalEncoder(nn.Module):
         if self.blind:
             return self.class_dims
         else:
-            return (
-                self.combine_hid_out_dims[-1]
-                * self.resnet_tensor_shape[1]
-                * self.resnet_tensor_shape[2]
-            )
+            # return (
+            #     self.combine_hid_out_dims[-1]
+            #     * self.resnet_tensor_shape[1]
+            #     * self.resnet_tensor_shape[2]
+            # )
+            return self.ff_size
 
     def get_object_type_encoding(
         self, observations: Dict[str, torch.FloatTensor]
@@ -350,9 +366,12 @@ class ResnetTensorGoalEncoder(nn.Module):
 
     def distribute_target(self, observations):
         target_emb = self.embed_class(observations[self.goal_uuid])
-        return target_emb.view(-1, self.class_dims, 1, 1).expand(
-            -1, -1, self.resnet_tensor_shape[-2], self.resnet_tensor_shape[-1]
-        )
+        target_emb = target_emb.squeeze()
+        return target_emb
+        # target_emb = self.embed_goal(observations[self.goal_uuid])
+        # return target_emb.view(-1, self.class_dims, 1, 1).expand(
+        #     -1, -1, self.resnet_tensor_shape[-2], self.resnet_tensor_shape[-1]
+        # )
 
     def adapt_input(self, observations):
         resnet = observations[self.resnet_uuid]
@@ -360,14 +379,18 @@ class ResnetTensorGoalEncoder(nn.Module):
         use_agent = False
         nagent = 1
 
-        if len(resnet.shape) == 6:
+        # if len(resnet.shape) == 6:
+        if len(resnet.shape) == 4:
             use_agent = True
             nstep, nsampler, nagent = resnet.shape[:3]
         else:
             nstep, nsampler = resnet.shape[:2]
 
-        observations[self.resnet_uuid] = resnet.view(-1, *resnet.shape[-3:])
+        # observations[self.resnet_uuid] = resnet.view(-1, *resnet.shape[-3:])
+        observations[self.resnet_uuid] = resnet.view(-1, resnet.shape[-1])
+        # observations[self.resnet_uuid] = resnet.squeeze()
         observations[self.goal_uuid] = observations[self.goal_uuid].view(-1, 1)
+        # observations[self.goal_uuid] = observations[self.goal_uuid].squeeze()
 
         return observations, use_agent, nstep, nsampler, nagent
 

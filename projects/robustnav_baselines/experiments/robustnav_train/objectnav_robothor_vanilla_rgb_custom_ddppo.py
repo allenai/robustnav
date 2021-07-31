@@ -79,7 +79,7 @@ class ObjectNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
 
         self.CAMERA_WIDTH = 400
         self.CAMERA_HEIGHT = 300
-        self.SCREEN_SIZE = 224
+        self.SCREEN_SIZE = 64 # 224
         self.MAX_STEPS = 500
 
         # Random crop specifications for data augmentations
@@ -124,7 +124,7 @@ class ObjectNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
         )
 
         OBSERVATIONS = [
-            "rgb_resnet",
+            "rgb_custom",
             "goal_object_type_ind",
         ]
 
@@ -202,12 +202,15 @@ class ObjectNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
 
     # DD-PPO Base
     def training_pipeline(self, **kwargs):
+        # Number of steps for training, pointnav is 75000000
         ppo_steps = int(300000000)
         lr = 3e-4
         num_mini_batch = 1
         update_repeats = 4
         num_steps = 128
+        # Save every step
         save_interval = 5000000
+        # How many steps before logging on TensorBoard
         log_interval = 10000 if torch.cuda.is_available() else 1
         gamma = 0.99
         use_gae = True
@@ -235,7 +238,7 @@ class ObjectNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
         )
 
     def create_model(self, **kwargs) -> nn.Module:
-        rgb_uuid = "rgb_resnet"
+        rgb_uuid = "rgb_custom"
         goal_sensor_uuid = "goal_object_type_ind"
 
         return ResnetTensorObjectNavActorCritic(
@@ -259,8 +262,8 @@ class ObjectNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
                     "encoder_base": encoder_base,
                     "input_height": self.SCREEN_SIZE,
                     "input_width": self.SCREEN_SIZE,
-                    "input_uuids": [f"{model_name}_lowres"],
-                    "output_uuid": f"rgb_{model_name}",
+                    "input_uuids": ["rgb_lowres"],
+                    "output_uuid": "rgb_custom",
                     "latent_size": latent_size
                 },
             ),
@@ -387,7 +390,7 @@ class ObjectNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
             "env_args": {
                 **self.ENV_ARGS,
                 "x_display": (
-                    f"10.{devices[process_ind % len(devices)]}"
+                    f"0.{devices[process_ind % len(devices)]}"
                     if devices is not None
                     and len(devices) > 0
                     and devices[process_ind % len(devices)] >= 0

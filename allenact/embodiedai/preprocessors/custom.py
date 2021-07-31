@@ -97,16 +97,16 @@ class CustomPreprocessor(Preprocessor):
         self.model_name = model_name
         self.shape = (1, latent_size)
 
-        if ckpt_path is not None:
-            self.model.load_state_dict(torch.load(ckpt_path))
-            
-            for p in self.model.parameters():
-                p.requires_grad = False
-
         self.device = torch.device("cpu") if device is None else device
         self.device_ids = device_ids or cast(
             List[torch.device], list(range(torch.cuda.device_count()))
         )
+
+        if ckpt_path is not None:
+            self.model.load_state_dict(torch.load(ckpt_path, map_location=self.device))
+            
+            for p in self.model.parameters():
+                p.requires_grad = False
 
         low = -np.inf
         high = np.inf
@@ -125,6 +125,7 @@ class CustomPreprocessor(Preprocessor):
         return self
 
     def process(self, obs: Dict[str, Any], *args: Any, **kwargs: Any) -> Any:
+        # print(obs)
         x = obs[self.input_uuids[0]].to(self.device).permute(0, 3, 1, 2)  # bhwc -> bchw
         # If the input is depth, repeat it across all 3 channels
         if x.shape[1] == 1:

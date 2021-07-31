@@ -76,7 +76,7 @@ class PointNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
 
         self.CAMERA_WIDTH = 400
         self.CAMERA_HEIGHT = 300
-        self.SCREEN_SIZE = 224
+        self.SCREEN_SIZE = 64 # 224
         self.MAX_STEPS = 500
 
         # Random crop specifications for data augmentations
@@ -96,6 +96,7 @@ class PointNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
         self.TRAIN_GPU_IDS = list(range(torch.cuda.device_count()))
         self.VALID_GPU_IDS = [torch.cuda.device_count() - 1]
         self.TEST_GPU_IDS = [torch.cuda.device_count() - 1]
+        self.PREPROCESSORS = list()
 
         OBSERVATIONS = [
             "rgb_resnet",
@@ -119,6 +120,7 @@ class PointNavS2SRGBCustomDDPPO(ExperimentConfig, ABC):
             ),
             include_private_scenes=False,
             renderDepthImage=False,
+            x_display=10.0
         )
 
     @classmethod
