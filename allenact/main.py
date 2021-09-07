@@ -285,7 +285,7 @@ def get_args():
         action="store_true",
         help="Specify if random crop is to be applied to the egocentric observations",
     )
-    parser.set_defaults(color_jitter=True)
+    parser.set_defaults(color_jitter=False)
 
     parser.add_argument(
         "-irs",
